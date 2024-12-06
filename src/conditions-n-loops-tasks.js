@@ -444,12 +444,12 @@ function shuffleChar(/* str, iterations */) {
  */
 function getNearestBigger(number) {
   const array = [];
-  let index1 = array.length - 2;
-  let index2;
 
-  for (let i = 0; i < number; Math.floor(number / 10)) {
-    array.unshift(number % 10);
+  for (let i = number; i > 0; i = Math.floor(i / 10)) {
+    array.unshift(i % 10);
   }
+
+  let index1 = array.length - 2;
 
   for (let j = index1; j >= 0 && array[j] >= array[j + 1]; j -= 1) {
     index1 -= 1;
@@ -457,12 +457,15 @@ function getNearestBigger(number) {
 
   if (index1 < 0) return number;
 
-  for (index2 = array.length - 1; array[index2] <= array[index1]; index2 -= 1) {
+  let index2 = array.length - 1;
+
+  while (array[index2] <= array[index1]) {
     index2 -= 1;
   }
 
+  const temp = array[index1];
   array[index1] = array[index2];
-  array[index2] = array[index1];
+  array[index2] = temp;
   const right = array.splice(index1 + 1);
   right.sort((a, b) => (a > b ? 1 : -1));
   return Number([...array, ...right].join(''));
