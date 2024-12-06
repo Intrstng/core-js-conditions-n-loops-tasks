@@ -89,8 +89,9 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  const isTriangle = a + b > c && a + c > b && b + c > a;
+  return isTriangle && (a === b || a === c || b === c);
 }
 
 /**
@@ -107,8 +108,43 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const isDigit =
+    typeof num === 'number' && num >= 0 && num < 10 && Number.isInteger(num);
+  function getRomanForDigit(digit) {
+    switch (digit) {
+      case 1:
+        return 'I';
+      case 2:
+        return 'II';
+      case 3:
+        return 'III';
+      case 4:
+        return 'IV';
+      case 5:
+        return 'V';
+      case 6:
+        return 'VI';
+      case 7:
+        return 'VII';
+      case 8:
+        return 'VIII';
+      case 9:
+        return 'IX';
+      default:
+        return 'X';
+    }
+  }
+  if (isDigit) {
+    return getRomanForDigit(num);
+  }
+  const firstDigitOfNumber = Math.ceil(num / 10);
+  const secondDigitOfNumber = num % 10;
+  let firstNumberToRoman = '';
+  for (let i = 1; i < firstDigitOfNumber; i += 1) {
+    firstNumberToRoman += 'X';
+  }
+  return `${firstNumberToRoman}${getRomanForDigit(secondDigitOfNumber)}`;
 }
 
 /**
@@ -126,8 +162,44 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  function getNameOfDigit(digit) {
+    switch (digit) {
+      case '1':
+        return 'one';
+      case '2':
+        return 'two';
+      case '3':
+        return 'three';
+      case '4':
+        return 'four';
+      case '5':
+        return 'five';
+      case '6':
+        return 'six';
+      case '7':
+        return 'seven';
+      case '8':
+        return 'eight';
+      case '9':
+        return 'nine';
+      case '0':
+        return 'zero';
+      case '-':
+        return 'minus';
+      default:
+        return 'point';
+    }
+  }
+  let result = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
+    if (i === numberStr.length - 1) {
+      result += `${getNameOfDigit(numberStr[i])}`;
+    } else {
+      result += `${getNameOfDigit(numberStr[i])} `;
+    }
+  }
+  return result;
 }
 
 /**
