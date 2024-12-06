@@ -67,8 +67,15 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (
+    king.x === queen.x ||
+    king.y === queen.y ||
+    Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)
+  ) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -311,8 +318,41 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  let offset = 0;
+  let currentNumber = 1;
+  const matrix = Array(size);
+  const quantity = size ** 2;
+
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = Array(size);
+  }
+
+  for (let i = currentNumber; i <= quantity; i += 1) {
+    for (let j = currentNumber; j <= quantity; j += 1) {
+      for (let column = offset; column < size - offset; column += 1) {
+        matrix[offset][column] = currentNumber;
+        currentNumber += 1;
+      }
+
+      for (let row = offset + 1; row < size - offset; row += 1) {
+        matrix[row][size - 1 - offset] = currentNumber;
+        currentNumber += 1;
+      }
+
+      for (let column = size - 2 - offset; column >= offset; column -= 1) {
+        matrix[size - 1 - offset][column] = currentNumber;
+        currentNumber += 1;
+      }
+
+      for (let row = size - 2 - offset; row >= offset + 1; row -= 1) {
+        matrix[row][offset] = currentNumber;
+        currentNumber += 1;
+      }
+      offset += 1;
+    }
+  }
+  return matrix;
 }
 
 /**
